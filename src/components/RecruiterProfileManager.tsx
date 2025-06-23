@@ -81,7 +81,7 @@ const RecruiterProfileManager = () => {
   const filteredConsultants = mockConsultants.filter(consultant => {
     const matchesName = consultant.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                        consultant.id.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesVertical = !selectedVertical || consultant.vertical === selectedVertical;
+    const matchesVertical = !selectedVertical || selectedVertical === "all" || consultant.vertical === selectedVertical;
     const matchesMinExp = !minExperience || consultant.experience >= parseInt(minExperience);
     const matchesMaxExp = !maxExperience || consultant.experience <= parseInt(maxExperience);
     const matchesSkill = !skillFilter || consultant.skills.some(skill => 
@@ -152,7 +152,7 @@ const RecruiterProfileManager = () => {
                   <SelectValue placeholder="All verticals" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All verticals</SelectItem>
+                  <SelectItem value="all">All verticals</SelectItem>
                   {verticals.map(vertical => (
                     <SelectItem key={vertical} value={vertical}>{vertical}</SelectItem>
                   ))}
