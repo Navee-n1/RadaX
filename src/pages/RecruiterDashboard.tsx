@@ -1,9 +1,10 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Brain, Users, FileText, AlertCircle } from "lucide-react";
+import { ArrowLeft, Brain, Users, FileText, AlertCircle, CheckCircle, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ConsultantManager from "@/components/ConsultantManager";
 
