@@ -1,19 +1,14 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Search, Filter, Brain, Users, FileText, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { ArrowLeft, Brain, Users, FileText, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import ConsultantManager from "@/components/ConsultantManager";
 
 const RecruiterDashboard = () => {
   const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
 
   const jobDescriptions = [
     {
@@ -137,8 +132,8 @@ const RecruiterDashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Active Matches</p>
-                  <p className="text-3xl font-bold text-gray-900">47</p>
+                  <p className="text-sm font-medium text-gray-600">Active Consultants</p>
+                  <p className="text-3xl font-bold text-gray-900">156</p>
                 </div>
                 <Users className="w-8 h-8 text-green-600" />
               </div>
@@ -171,93 +166,28 @@ const RecruiterDashboard = () => {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="jds" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+        <Tabs defaultValue="consultants" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="consultants">Consultants</TabsTrigger>
             <TabsTrigger value="jds">Job Descriptions</TabsTrigger>
             <TabsTrigger value="agents">Agent Monitoring</TabsTrigger>
             <TabsTrigger value="reports">Reports</TabsTrigger>
           </TabsList>
+
+          {/* Consultants Tab */}
+          <TabsContent value="consultants">
+            <ConsultantManager />
+          </TabsContent>
 
           {/* Job Descriptions Tab */}
           <TabsContent value="jds">
             <Card>
               <CardHeader>
                 <CardTitle>Job Description Management</CardTitle>
-                <CardDescription>Search, filter, and monitor JD processing status</CardDescription>
+                <CardDescription>Monitor and manage all JD processing requests</CardDescription>
               </CardHeader>
               <CardContent>
-                {/* Search and Filter Controls */}
-                <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                  <div className="flex-1">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                      <Input
-                        placeholder="Search by JD title, ID, or requester..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
-                  <Select value={statusFilter} onValueChange={setStatusFilter}>
-                    <SelectTrigger className="w-full sm:w-48">
-                      <Filter className="w-4 h-4 mr-2" />
-                      <SelectValue placeholder="Filter by status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All Statuses</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* JD Table */}
-                <div className="border rounded-lg">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Job Description</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead>Matches</TableHead>
-                        <TableHead>Requester</TableHead>
-                        <TableHead>Created</TableHead>
-                        <TableHead>Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {jobDescriptions.map((jd) => (
-                        <TableRow key={jd.id}>
-                          <TableCell>
-                            <div>
-                              <p className="font-medium">{jd.title}</p>
-                              <p className="text-sm text-gray-500">{jd.id}</p>
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center space-x-2">
-                              {getStatusIcon(jd.status)}
-                              {getStatusBadge(jd.status)}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {jd.matches} matches
-                            </Badge>
-                          </TableCell>
-                          <TableCell>{jd.requester}</TableCell>
-                          <TableCell>{jd.created}</TableCell>
-                          <TableCell>
-                            <Button variant="outline" size="sm">
-                              View Details
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
+                <p className="text-gray-600">JD management interface will be displayed here...</p>
               </CardContent>
             </Card>
           </TabsContent>
@@ -335,20 +265,13 @@ const RecruiterDashboard = () => {
                   </div>
                   
                   <div className="space-y-4">
-                    <h3 className="font-semibold text-gray-900">Recent Activity</h3>
+                    <h3 className="font-semibold text-gray-900">System Health</h3>
                     <div className="space-y-3">
-                      <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                        <CheckCircle className="w-5 h-5 text-green-600" />
+                      <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                         <div>
-                          <p className="text-sm font-medium">JD-2024-001 processed</p>
-                          <p className="text-xs text-gray-600">3 matches found</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-                        <Clock className="w-5 h-5 text-blue-600" />
-                        <div>
-                          <p className="text-sm font-medium">JD-2024-002 in progress</p>
-                          <p className="text-xs text-gray-600">Ranking profiles</p>
+                          <p className="text-sm font-medium">All systems operational</p>
+                          <p className="text-xs text-gray-600">Last updated: 2 minutes ago</p>
                         </div>
                       </div>
                     </div>
