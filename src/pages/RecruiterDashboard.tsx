@@ -1,165 +1,151 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Brain, Users, FileText, AlertCircle } from "lucide-react";
+import { ArrowLeft, Brain, Users, FileText, AlertCircle, BarChart3, Moon, Sun, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import ConsultantManager from "@/components/ConsultantManager";
+import RecruiterProfileManager from "@/components/RecruiterProfileManager";
 
 const RecruiterDashboard = () => {
   const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(false);
 
-  const jobDescriptions = [
-    {
-      id: "JD-2024-001",
-      title: "Senior Full Stack Developer",
-      status: "completed",
-      matches: 3,
-      created: "2024-01-15",
-      requester: "John Smith"
-    },
-    {
-      id: "JD-2024-002", 
-      title: "DevOps Engineer",
-      status: "in-progress",
-      matches: 0,
-      created: "2024-01-14",
-      requester: "Sarah Johnson"
-    },
-    {
-      id: "JD-2024-003",
-      title: "Data Scientist",
-      status: "pending",
-      matches: 0,
-      created: "2024-01-13",
-      requester: "Mike Chen"
-    }
-  ];
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+    document.documentElement.classList.toggle('dark');
+  };
 
   const agentMetrics = [
     {
-      agent: "Comparison Agent",
-      status: "active",
-      latency: "1.2s",
-      errorRate: "0.1%",
-      processed: 156
-    },
-    {
-      agent: "Ranking Agent", 
+      agent: "SBERT Comparison Engine",
       status: "active",
       latency: "0.8s",
       errorRate: "0.0%",
-      processed: 89
+      processed: 2847,
+      accuracy: "98.7%"
     },
     {
-      agent: "Communication Agent",
+      agent: "Smart Ranking System", 
+      status: "active",
+      latency: "0.6s",
+      errorRate: "0.1%",
+      processed: 1543,
+      accuracy: "96.4%"
+    },
+    {
+      agent: "Communication Hub",
       status: "active", 
-      latency: "2.1s",
-      errorRate: "0.2%",
-      processed: 24
+      latency: "1.2s",
+      errorRate: "0.0%",
+      processed: 247,
+      accuracy: "100%"
     }
   ];
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "completed":
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
-      case "in-progress":
-        return <Clock className="w-4 h-4 text-blue-600 animate-spin" />;
-      case "pending":
-        return <AlertCircle className="w-4 h-4 text-orange-600" />;
-      default:
-        return null;
-    }
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "completed":
-        return <Badge className="bg-green-100 text-green-800">Completed</Badge>;
-      case "in-progress":
-        return <Badge className="bg-blue-100 text-blue-800">In Progress</Badge>;
-      case "pending":
-        return <Badge className="bg-orange-100 text-orange-800">Pending</Badge>;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div className={`min-h-screen transition-all duration-700 ${isDark ? 'dark bg-gradient-to-br from-gray-900 via-slate-900 to-black' : 'bg-gradient-to-br from-slate-50 via-green-50 to-emerald-50'}`}>
+      {/* Glassmorphic Header */}
+      <header className="backdrop-blur-xl bg-white/10 dark:bg-black/20 border-b border-white/20 dark:border-white/10 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 onClick={() => navigate('/')}
-                className="flex items-center space-x-2"
+                className="flex items-center space-x-2 rounded-full backdrop-blur-sm bg-white/20 dark:bg-black/20 border border-white/30 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/30"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Home</span>
               </Button>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <h1 className="text-2xl font-bold text-gray-900">Recruiter Admin Console</h1>
+              <div className="h-6 w-px bg-white/30 dark:bg-white/20"></div>
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
+                  <Users className="w-5 h-5 text-white" />
+                </div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                  Recruiter Command Center
+                </h1>
+              </div>
             </div>
-            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-              All Agents Active
-            </Badge>
+            <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="rounded-full backdrop-blur-sm bg-white/20 dark:bg-black/20 border border-white/30 dark:border-white/10"
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </Button>
+              <Badge className="bg-green-500/20 text-green-700 dark:text-green-300 border-green-300/30 px-4 py-2 rounded-full">
+                All Agents Online
+              </Badge>
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
+          <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total JDs</p>
-                  <p className="text-3xl font-bold text-gray-900">24</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active JDs</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">24</p>
+                  <p className="text-sm text-green-600 dark:text-green-400 font-medium">+12% this week</p>
                 </div>
-                <FileText className="w-8 h-8 text-blue-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center">
+                  <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                </div>
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Active Consultants</p>
-                  <p className="text-3xl font-bold text-gray-900">156</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Consultants</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">156</p>
+                  <p className="text-sm text-green-600 dark:text-green-400 font-medium">+8% this week</p>
                 </div>
-                <Users className="w-8 h-8 text-green-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center">
+                  <Users className="w-6 h-6 text-green-600 dark:text-green-400" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Avg Latency</p>
-                  <p className="text-3xl font-bold text-gray-900">1.4s</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">AI Accuracy</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">98.2%</p>
+                  <p className="text-sm text-green-600 dark:text-green-400 font-medium">+0.3% this week</p>
                 </div>
-                <Brain className="w-8 h-8 text-purple-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center">
+                  <Brain className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10 hover:bg-white/30 dark:hover:bg-black/30 transition-all duration-300 hover:scale-105">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Error Rate</p>
-                  <p className="text-3xl font-bold text-gray-900">0.1%</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Matches Today</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-white">47</p>
+                  <p className="text-sm text-green-600 dark:text-green-400 font-medium">+23% this week</p>
                 </div>
-                <AlertCircle className="w-8 h-8 text-orange-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -167,113 +153,143 @@ const RecruiterDashboard = () => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="consultants" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="consultants">Consultants</TabsTrigger>
-            <TabsTrigger value="jds">Job Descriptions</TabsTrigger>
-            <TabsTrigger value="agents">Agent Monitoring</TabsTrigger>
-            <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-4 backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10 p-1 rounded-2xl">
+            <TabsTrigger value="consultants" className="rounded-xl data-[state=active]:bg-white/50 dark:data-[state=active]:bg-black/50">
+              Consultant Profiles
+            </TabsTrigger>
+            <TabsTrigger value="jds" className="rounded-xl data-[state=active]:bg-white/50 dark:data-[state=active]:bg-black/50">
+              Job Descriptions
+            </TabsTrigger>
+            <TabsTrigger value="agents" className="rounded-xl data-[state=active]:bg-white/50 dark:data-[state=active]:bg-black/50">
+              AI Monitoring
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="rounded-xl data-[state=active]:bg-white/50 dark:data-[state=active]:bg-black/50">
+              Analytics
+            </TabsTrigger>
           </TabsList>
 
           {/* Consultants Tab */}
           <TabsContent value="consultants">
-            <ConsultantManager />
+            <RecruiterProfileManager />
           </TabsContent>
 
           {/* Job Descriptions Tab */}
           <TabsContent value="jds">
-            <Card>
+            <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10">
               <CardHeader>
-                <CardTitle>Job Description Management</CardTitle>
-                <CardDescription>Monitor and manage all JD processing requests</CardDescription>
+                <CardTitle className="flex items-center space-x-2">
+                  <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span>Job Description Management</span>
+                </CardTitle>
+                <CardDescription>Monitor and manage all JD processing requests with detailed insights</CardDescription>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">JD management interface will be displayed here...</p>
+              <CardContent className="p-8">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mx-auto">
+                    <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">JD Management Interface</h3>
+                  <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                    Advanced JD tracking and management features will be available here with real-time processing status and detailed analytics.
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
 
           {/* Agent Monitoring Tab */}
           <TabsContent value="agents">
-            <Card>
+            <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10">
               <CardHeader>
-                <CardTitle>AI Agent Performance Monitoring</CardTitle>
-                <CardDescription>Real-time metrics for the multi-agent framework</CardDescription>
+                <CardTitle className="flex items-center space-x-2">
+                  <Brain className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  <span>AI Agent Performance Monitoring</span>
+                </CardTitle>
+                <CardDescription>Real-time metrics and health monitoring for the AI multi-agent framework</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   {agentMetrics.map((agent) => (
-                    <div key={agent.agent} className="p-4 border rounded-lg">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                          <h3 className="font-semibold text-gray-900">{agent.agent}</h3>
-                          <Badge variant="outline" className="bg-green-50 text-green-700">
-                            {agent.status}
-                          </Badge>
+                    <Card key={agent.agent} className="backdrop-blur-sm bg-white/30 dark:bg-black/30 border-white/40 dark:border-white/20">
+                      <CardContent className="p-6">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-4 h-4 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
+                            <div>
+                              <h3 className="font-bold text-gray-900 dark:text-white text-lg">{agent.agent}</h3>
+                              <Badge className="bg-green-100/50 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-300/30 mt-1">
+                                {agent.status}
+                              </Badge>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <Badge className="bg-blue-100/50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-300/30 px-3 py-1">
+                              {agent.processed.toLocaleString()} processed today
+                            </Badge>
+                          </div>
                         </div>
-                        <Badge variant="secondary">
-                          {agent.processed} processed
-                        </Badge>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="text-center p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-600">Average Latency</p>
-                          <p className="text-xl font-bold text-gray-900">{agent.latency}</p>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                          <div className="text-center p-4 bg-gradient-to-br from-blue-50/50 to-cyan-50/50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl backdrop-blur-sm">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Latency</p>
+                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{agent.latency}</p>
+                          </div>
+                          <div className="text-center p-4 bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl backdrop-blur-sm">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Error Rate</p>
+                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{agent.errorRate}</p>
+                          </div>
+                          <div className="text-center p-4 bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl backdrop-blur-sm">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Accuracy</p>
+                            <p className="text-2xl font-bold text-gray-900 dark:text-white">{agent.accuracy}</p>
+                          </div>
+                          <div className="text-center p-4 bg-gradient-to-br from-orange-50/50 to-red-50/50 dark:from-orange-900/20 dark:to-red-900/20 rounded-xl backdrop-blur-sm">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Queue Status</p>
+                            <p className="text-2xl font-bold text-green-600 dark:text-green-400">Healthy</p>
+                          </div>
                         </div>
-                        <div className="text-center p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-600">Error Rate</p>
-                          <p className="text-xl font-bold text-gray-900">{agent.errorRate}</p>
-                        </div>
-                        <div className="text-center p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm text-gray-600">Queue Status</p>
-                          <p className="text-xl font-bold text-green-600">Healthy</p>
-                        </div>
-                      </div>
-                    </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Reports Tab */}
-          <TabsContent value="reports">
-            <Card>
+          {/* Analytics Tab */}
+          <TabsContent value="analytics">
+            <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10">
               <CardHeader>
-                <CardTitle>Analytics & Reports</CardTitle>
-                <CardDescription>Generate detailed reports on matching performance</CardDescription>
+                <CardTitle className="flex items-center space-x-2">
+                  <BarChart3 className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <span>Analytics & Performance Insights</span>
+                </CardTitle>
+                <CardDescription>Generate detailed reports and analyze recruitment matching performance</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h3 className="font-semibold text-gray-900">Quick Reports</h3>
-                    <div className="space-y-2">
-                      <Button variant="outline" className="w-full justify-start">
-                        <FileText className="w-4 h-4 mr-2" />
-                        Weekly Matching Summary
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start">
-                        <Users className="w-4 h-4 mr-2" />
-                        Top Performing Consultants
-                      </Button>
-                      <Button variant="outline" className="w-full justify-start">
-                        <Brain className="w-4 h-4 mr-2" />
-                        Agent Performance Report
-                      </Button>
-                    </div>
+              <CardContent className="p-8">
+                <div className="text-center space-y-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto">
+                    <BarChart3 className="w-8 h-8 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Advanced Analytics Dashboard</h3>
+                    <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                      Comprehensive analytics including matching performance trends, agent efficiency metrics, 
+                      consultant placement rates, and detailed reporting capabilities will be available here.
+                    </p>
                   </div>
                   
-                  <div className="space-y-4">
-                    <h3 className="font-semibold text-gray-900">System Health</h3>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <div>
-                          <p className="text-sm font-medium">All systems operational</p>
-                          <p className="text-xs text-gray-600">Last updated: 2 minutes ago</p>
-                        </div>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-100/50 to-cyan-100/50 dark:from-blue-900/20 dark:to-cyan-900/20 backdrop-blur-sm">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Matching Trends</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Track match quality and success rates over time</p>
+                    </div>
+                    <div className="p-6 rounded-2xl bg-gradient-to-br from-green-100/50 to-emerald-100/50 dark:from-green-900/20 dark:to-emerald-900/20 backdrop-blur-sm">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Performance Metrics</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Monitor AI agent performance and optimization opportunities</p>
+                    </div>
+                    <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-100/50 to-pink-100/50 dark:from-purple-900/20 dark:to-pink-900/20 backdrop-blur-sm">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Custom Reports</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Generate detailed reports for stakeholders and analysis</p>
                     </div>
                   </div>
                 </div>
