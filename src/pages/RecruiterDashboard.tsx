@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Brain, Users, FileText, AlertCircle, BarChart3, Moon, Sun, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import RecruiterProfileManager from "@/components/RecruiterProfileManager";
+import JobDescriptionsManager from "@/components/JobDescriptionsManager";
 
 const RecruiterDashboard = () => {
   const navigate = useNavigate();
@@ -175,26 +175,7 @@ const RecruiterDashboard = () => {
 
           {/* Job Descriptions Tab */}
           <TabsContent value="jds">
-            <Card className="backdrop-blur-xl bg-white/20 dark:bg-black/20 border-white/30 dark:border-white/10">
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <FileText className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                  <span>Job Description Management</span>
-                </CardTitle>
-                <CardDescription>Monitor and manage all JD processing requests with detailed insights</CardDescription>
-              </CardHeader>
-              <CardContent className="p-8">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                    <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">JD Management Interface</h3>
-                  <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                    Advanced JD tracking and management features will be available here with real-time processing status and detailed analytics.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <JobDescriptionsManager />
           </TabsContent>
 
           {/* Agent Monitoring Tab */}
