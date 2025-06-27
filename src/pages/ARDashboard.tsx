@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Moon, Sun, Target } from "lucide-react";
@@ -13,6 +12,7 @@ const ARDashboard = () => {
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
   const [activeJD, setActiveJD] = useState(null);
+  const [userEmail, setUserEmail] = useState(""); // Add state for user email
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -21,6 +21,7 @@ const ARDashboard = () => {
 
   const handleJDUpload = (jdData) => {
     setActiveJD(jdData);
+    setUserEmail(jdData.userEmail); // Store user email from JD data
     console.log('JD uploaded:', jdData);
   };
 
@@ -95,7 +96,11 @@ const ARDashboard = () => {
 
           <TabsContent value="live-tracker">
             {activeJD ? (
-              <LiveTracker jdData={activeJD} />
+              <LiveTracker 
+                jdId={activeJD.id} 
+                userEmail={userEmail} 
+                jdData={activeJD} 
+              />
             ) : (
               <div className="text-center py-12">
                 <p className="text-gray-600 dark:text-gray-400">Upload a JD first to see live tracking</p>
