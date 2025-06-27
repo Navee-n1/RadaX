@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Brain, Users, FileText, AlertCircle, BarChart3, Moon, Sun, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import RecruiterProfileManager from "@/components/RecruiterProfileManager";
+import ConsultantManager from "@/components/ConsultantManager";
 import JobDescriptionsManager from "@/components/JobDescriptionsManager";
 
 const RecruiterDashboard = () => {
@@ -170,7 +170,7 @@ const RecruiterDashboard = () => {
 
           {/* Consultants Tab */}
           <TabsContent value="consultants">
-            <RecruiterProfileManager />
+            <ConsultantManager />
           </TabsContent>
 
           {/* Job Descriptions Tab */}
