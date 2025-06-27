@@ -15,6 +15,7 @@ const ARDashboard = () => {
   const [isDark, setIsDark] = useState(false);
   const [activeJD, setActiveJD] = useState(null);
   const [userEmail, setUserEmail] = useState("");
+  const [activeTab, setActiveTab] = useState("jd-matching");
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -110,7 +111,7 @@ const ARDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="jd-matching" className="space-y-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
           <TabsList className="grid w-full grid-cols-4 glass-surface p-1.5 rounded-2xl h-16 border-0 shadow-lg">
             <TabsTrigger 
               value="jd-matching" 
@@ -166,7 +167,7 @@ const ARDashboard = () => {
                   <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-3">No Active JD</h3>
                   <p className="text-slate-600 dark:text-slate-400 text-lg">Upload a Job Description first to enable live tracking</p>
                   <Button 
-                    onClick={() => document.querySelector('[value="jd-matching"]')?.click()} 
+                    onClick={() => setActiveTab('jd-matching')} 
                     className="mt-6 bg-sky-500 hover:bg-sky-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                   >
                     Upload JD Now
