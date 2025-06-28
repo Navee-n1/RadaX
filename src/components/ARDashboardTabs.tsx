@@ -42,7 +42,7 @@ const ARDashboardTabs = ({ activeJD, handleJDUpload }: ARDashboardTabsProps) => 
 
       <TabsContent value="live-tracker">
         {activeJD ? (
-          <LiveTracker jdId={activeJD.id} userEmail={activeJD.userEmail} />
+          <LiveTracker jdId={activeJD.id} userEmail={activeJD.userEmail} jdData={activeJD} />
         ) : (
           <div className="text-center py-12">
             <p className="text-slate-600 dark:text-slate-400 font-['Helvetica_Neue','-apple-system','BlinkMacSystemFont',sans-serif]">Upload a JD first to see live tracking</p>
